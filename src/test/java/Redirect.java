@@ -11,8 +11,6 @@ public class Redirect {
 
     @Test
     public void showHeaders(){
-        Map<String, String> headers = new HashMap<>();
-        headers.put("myHeader1", "myValue1");
         Response response = RestAssured
                 .given()
                 .redirects()
