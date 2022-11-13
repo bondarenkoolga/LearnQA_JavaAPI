@@ -28,7 +28,10 @@ public class FindPassword {
                 "qazwsx","Football","000000","starwars", "123qwe"
         };
         int i = 0;
+       // credentials.put("password", login);
+        String cookie = "";
         String check ="You are authorized";
+        String check1 ="";
         int checkCode = check.hashCode();
         int c=0;
         while (c!=checkCode) {
