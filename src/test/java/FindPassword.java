@@ -44,7 +44,6 @@ public class FindPassword {
                     .post("https://playground.learnqa.ru/ajax/api/get_secret_password_homework")
                     .andReturn();
             cookie = responseForCookie.getCookie("auth_cookie");
-            System.out.println("auth_cookie - " + cookie);
             Map<String, String> cookies = new HashMap<>();
             cookies.put("auth_cookie", cookie);
             Response responseForPasswordCheck = RestAssured
@@ -54,7 +53,9 @@ public class FindPassword {
                     .andReturn();
             check1 = responseForPasswordCheck.getBody().asString();
             c = check1.hashCode();
-            System.out.println("Статус - "+check1);
+            if (c==checkCode) {
+                System.out.println("Статус - " + check1);
+            }
         }
     }
 }
