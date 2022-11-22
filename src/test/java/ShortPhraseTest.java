@@ -29,7 +29,7 @@ public class ShortPhraseTest {
         assertTrue(str.length()>=15, "Строка короче 15 символов");*/
     }
     @Test
-    public void phrase() {
+    public void findPassword() {
         assertTrue( myMethod(new ByteArrayInputStream("Mock input\n".getBytes())).length()>=15,"Строка короче 15 символов");
     }
 }
