@@ -58,4 +58,24 @@ return given()
                 .delete(url)
                 .andReturn();
     }
+
+    @Step("Make a Put-request")
+    public Response makePutRequest(String url, String token, String cookie, Map<String, String> authData){
+        return given()
+                .filter(new AllureRestAssured())
+                .header(new Header("x-csrf-token", token))
+                .cookie("auth_sid", cookie)
+                .body(authData)
+                .put(url)
+                .andReturn();
+    }
+
+    @Step("Make a Put-request without authorization")
+    public Response makePutRequestWithoutAuth(String url, Map<String, String> authData){
+        return given()
+                .filter(new AllureRestAssured())
+                .body(authData)
+                .put(url)
+                .andReturn();
+    }
 }
