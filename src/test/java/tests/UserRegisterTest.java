@@ -1,5 +1,6 @@
 package tests;
 
+import io.qameta.allure.*;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -8,6 +9,7 @@ import lib.Assertions;
 import lib.BaseTestCase;
 import lib.DataGenerator;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -16,11 +18,17 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.util.HashMap;
 import java.util.Map;
 
+@Story("Work with user")
+@Epic("Registration cases")
+@Feature("Registration")
 public class UserRegisterTest extends BaseTestCase {
 
     private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
 
     @Test
+    @Description("Try to create user with existing email")
+    @DisplayName("Create user with existing email")
+    @Severity(value = SeverityLevel.CRITICAL)
     public void testCreateUserWithExistingEmail(){
         String email="vinkotov@example.com";
 
@@ -38,6 +46,9 @@ public class UserRegisterTest extends BaseTestCase {
     }
 
     @Test
+    @Description("Positive test for create user with generate random email")
+    @DisplayName("Positive test for create user")
+    @Severity(value = SeverityLevel.BLOCKER)
     public void testCreateUserSuccessfully(){
         String email= DataGenerator.getRandomEmail();
 
@@ -54,6 +65,9 @@ public class UserRegisterTest extends BaseTestCase {
 
     //Создание пользователя с некорректным email - без символа @
     @Test
+    @Description("Try to create user with incorrect email")
+    @DisplayName("Create user with incorrect email")
+    @Severity(value = SeverityLevel.CRITICAL)
     public void testCreateUserWithIncorrectEmail(){
         String email= DataGenerator.getRandomEmail();
         email = email.replace("@","");
@@ -69,6 +83,9 @@ public class UserRegisterTest extends BaseTestCase {
     //Создание пользователя без указания одного из полей
     @ParameterizedTest
     @ValueSource(strings = {"username", "firstName", "lastName","email", "password"})
+    @Description("Try to create user without one field")
+    @DisplayName("Create user without one field")
+    @Severity(value = SeverityLevel.CRITICAL)
     public void testCreateUserWithoutOneField(String attribs){
         Map<String, String> userData = DataGenerator.getRegistrationData();
         userData.remove(attribs);
@@ -83,6 +100,9 @@ public class UserRegisterTest extends BaseTestCase {
     //Создание пользователя с очень коротким именем в один символ
     @ParameterizedTest
     @ValueSource(strings = {"username", "firstName", "lastName"})
+    @Description("Try to create user with short name")
+    @DisplayName("Create user with short name")
+    @Severity(value = SeverityLevel.NORMAL)
     public void testCreateUserWithShortName(String attribs){
         Map <String,String> authData= new HashMap<>();
         String name = RandomStringUtils.randomAlphabetic(1);
@@ -96,6 +116,9 @@ public class UserRegisterTest extends BaseTestCase {
     //Создание пользователя с очень длинным именем - длиннее 250 символов
     @ParameterizedTest
     @ValueSource(strings = {"username", "firstName", "lastName"})
+    @Description("Try to create user with long name")
+    @DisplayName("Create user with long name")
+    @Severity(value = SeverityLevel.NORMAL)
     public void testCreateUserWithLongName(String attribs){
         Map <String,String> authData= new HashMap<>();
         String name = RandomStringUtils.randomAlphabetic(251);

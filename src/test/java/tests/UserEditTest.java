@@ -1,5 +1,6 @@
 package tests;
 
+import io.qameta.allure.*;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -8,16 +9,23 @@ import lib.Assertions;
 import lib.BaseTestCase;
 import lib.DataGenerator;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Story("Work with user")
+@Epic("Edit cases")
+@Feature("Editing")
 public class UserEditTest extends BaseTestCase {
     private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
 
     @Test
+    @Description("Generate user, login, edit and get")
+    @DisplayName("Positive test for edit")
+    @Severity(value = SeverityLevel.CRITICAL)
     public void testEditJustCreatedTest(){
 //Generate user
         Map<String,String> userData= DataGenerator.getRegistrationData();
@@ -63,6 +71,9 @@ String userId = responseCreateAuth.getString("id");
 
     //Попытаемся изменить данные пользователя, будучи неавторизованными
     @Test
+    @Description("Try to edit without login")
+    @DisplayName("Edit without login")
+    @Severity(value = SeverityLevel.CRITICAL)
     public void testEditWithOutAuth(){
         //Generate user
         Map<String,String> userData= DataGenerator.getRegistrationData();
@@ -81,6 +92,9 @@ String userId = responseCreateAuth.getString("id");
 
     //Попытаемся изменить данные пользователя, будучи авторизованными другим пользователем
     @Test
+    @Description("Try to edit as another user")
+    @DisplayName("Edit as another user")
+    @Severity(value = SeverityLevel.CRITICAL)
     public void testEditAsAnotherUser(){
         //Generate user1
         Map<String,String> userData= DataGenerator.getRegistrationData();
@@ -131,6 +145,9 @@ String userId = responseCreateAuth.getString("id");
 
     //Попытаемся изменить email пользователя, будучи авторизованными тем же пользователем, на новый email без символа @
     @Test
+    @Description("Try to edit using incorrect email")
+    @DisplayName("Edit using incorrect email")
+    @Severity(value = SeverityLevel.CRITICAL)
     public void testEditIncorrectEmail(){
         //Generate user1
         Map<String,String> userData= DataGenerator.getRegistrationData();
@@ -159,6 +176,9 @@ String userId = responseCreateAuth.getString("id");
 
     //Попытаемся изменить firstName пользователя, будучи авторизованными тем же пользователем, на очень короткое значение в один символ
     @Test
+    @Description("Try to edit using short first name")
+    @DisplayName("Edit using short first name")
+    @Severity(value = SeverityLevel.NORMAL)
     public void testEditShortFirstName(){
         //Generate user1
         Map<String,String> userData= DataGenerator.getRegistrationData();

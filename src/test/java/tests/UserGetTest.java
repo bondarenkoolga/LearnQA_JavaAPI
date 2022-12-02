@@ -1,21 +1,29 @@
 package tests;
 
+import io.qameta.allure.*;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import lib.ApiCoreRequests;
 import lib.Assertions;
 import lib.BaseTestCase;
 import lib.DataGenerator;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
-
+@Story("Work with user")
+@Epic("Get cases")
+@Feature("Get information")
+@Owner(value = "Me")
 public class UserGetTest extends BaseTestCase {
     private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
 
     @Test
+    @Description("Try to get data without authorization")
+    @DisplayName("Get data without authorization")
+    @Severity(value = SeverityLevel.CRITICAL)
     public void testGetUserDataNotAuth(){
         Response responseUserData= RestAssured
                 .get("https://playground.learnqa.ru/api/user/2")
@@ -28,6 +36,9 @@ public class UserGetTest extends BaseTestCase {
     }
 
     @Test
+    @Description("Get data about myself")
+    @DisplayName("Positive case for get data")
+    @Severity(value = SeverityLevel.CRITICAL)
     public void testGetUserDetailsAuthAsSameUser() {
         Map<String,String> authData=new HashMap<>();
         authData.put("email","vinkotov@example.com");
@@ -53,6 +64,9 @@ public class UserGetTest extends BaseTestCase {
 
 //Тест, который авторизовывается одним пользователем, но получает данные другого
     @Test
+    @Description("Try to get data of another user")
+    @DisplayName("Get data of another user")
+    @Severity(value = SeverityLevel.CRITICAL)
     public void testGetUserDetailsAuthAsAnotherUser() {
         Map<String,String> authData=new HashMap<>();
         authData.put("email","vinkotov@example.com");

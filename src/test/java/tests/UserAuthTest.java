@@ -1,5 +1,6 @@
 package tests;
 
+import io.qameta.allure.*;
 import io.restassured.RestAssured;
 import io.restassured.http.Header;
 import io.restassured.http.Headers;
@@ -16,12 +17,11 @@ import java.util.HashMap;
 import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import io.qameta.allure.Description;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
+
 import org.junit.jupiter.api.DisplayName;
 import lib.ApiCoreRequests;
 
+@Story("Work with user")
 @Epic("Authorization cases")
 @Feature("Authorization")
 public class UserAuthTest extends BaseTestCase {
@@ -47,6 +47,7 @@ public class UserAuthTest extends BaseTestCase {
     @Test
     @Description("Successful way")
     @DisplayName("Test positive auth user")
+    @Severity(value = SeverityLevel.BLOCKER)
     public void testAuthUser() {
         Response responseCheckAuth = apiCoreRequests.makeGetRequest("https://playground.learnqa.ru/api/user/auth", header, cookie);
     Assertions.assertJsonByName(responseCheckAuth,"user_id",this.userIdOnAuth);
@@ -57,6 +58,7 @@ public class UserAuthTest extends BaseTestCase {
     @DisplayName("Test negative auth user")
     @ParameterizedTest
     @ValueSource(strings = {"cookie", "headers"})
+    @Severity(value = SeverityLevel.CRITICAL)
     public void testNegativeAuthUser(String condition){
         RequestSpecification spec = RestAssured.given();
         spec.baseUri("https://playground.learnqa.ru/api/user/auth");

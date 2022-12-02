@@ -1,5 +1,6 @@
 package tests;
 
+import io.qameta.allure.*;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -8,15 +9,22 @@ import lib.ApiCoreRequests;
 import lib.Assertions;
 import lib.BaseTestCase;
 import lib.DataGenerator;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Story("Work with user")
+@Epic("Delete cases")
+@Feature("Delete")
 public class UserDeleteTest extends BaseTestCase {
     private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
 
     //Первый - на попытку удалить пользователя по ID 2
+    @Description("Try to delete user with id=2")
+    @DisplayName("Delete user with id=2")
+    @Severity(value = SeverityLevel.CRITICAL)
     @Test
     public void testDeleteUncialUser() {
         Map<String,String> authData=new HashMap<>();
@@ -35,6 +43,9 @@ public class UserDeleteTest extends BaseTestCase {
 
     //Создать пользователя, авторизоваться из-под него, удалить, затем попробовать получить его данные по ID и убедиться, что пользователь действительно удален
     @Test
+    @Description("Create user, login, delete and check")
+    @DisplayName("Full test for delete")
+    @Severity(value = SeverityLevel.CRITICAL)
     public void testDeleteFullPositiveCase() {
         //Generate user
         Map<String,String> userData= DataGenerator.getRegistrationData();
@@ -65,6 +76,9 @@ public class UserDeleteTest extends BaseTestCase {
 
     //негативный, попробовать удалить пользователя, будучи авторизованными другим пользователем
     @Test
+    @Description("Try to delete user if you login as another user")
+    @DisplayName("Negative test for delete as another user")
+    @Severity(value = SeverityLevel.CRITICAL)
     public void testDeleteAsAnotherUser() {
         //Generate user1
         Map<String,String> userData= DataGenerator.getRegistrationData();
